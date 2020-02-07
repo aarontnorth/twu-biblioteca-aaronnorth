@@ -7,32 +7,44 @@ public class BibliotecaApp {
 
     static ArrayList<Book> availableBooks;
     static String errorMessage = "Please select a valid option!";
+    static Scanner myScanner;
 
     public static void main(String[] args) {
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        Scanner myScanner = new Scanner(System.in);  // Create a Scanner object
         setUpAvailableBooks();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
-        runMainMenu(myObj);
+        runMainMenu();
     }
 
-    private static void runMainMenu(Scanner myObj) {
-        showMainMenu(myObj);
-        String userInput = myObj.nextLine();  // Read user input
-        try {
-            pickMenuOption(userInput);
-        } catch (IncorrectOptionException e) {
-            printErrorMessage();
+    static String getUserInput(){
+        String userInput = myScanner.nextLine();  // Read user input
+        return userInput;
+    }
+
+    private static void runMainMenu() {
+        Boolean userWantsToBrowse = true;
+        while(userWantsToBrowse) {
+            String userInput = getUserInput();
+            try {
+                pickMenuOption(userInput);
+            } catch (IncorrectOptionException e) {
+                printErrorMessage();
+            } catch (quitException e) {
+                userWantsToBrowse = false;
+            }
         }
-
     }
 
-    static void showMainMenu(Scanner myObj) {
+    static void showMainMenu() {
         System.out.println("What would you like to do? Type the command listed in parentheses");
         System.out.println("See available books (Books)");
     }
 
-    static void pickMenuOption(String userInput) throws IncorrectOptionException {
-        if(userInput.equals("Books")){
+    static void pickMenuOption(String userInput) throws IncorrectOptionException, quitException {
+        if(userInput.equals("q")){
+            throw new quitException("User wants to quit");
+        }
+        else if(userInput.equals("Books")){
             printAvailableBooks();
         }
         else{
@@ -63,6 +75,12 @@ public class BibliotecaApp {
             bookList = bookList + book.toString() + "\n";
         }
         return bookList;
+    }
+
+    public static class quitException extends Exception {
+        public quitException(String errorMessage) {
+            super(errorMessage);
+        }
     }
 
     public static class IncorrectOptionException extends Exception {

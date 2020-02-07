@@ -37,8 +37,12 @@ public class ExampleTest {
     }
 
     @Test(expected = BibliotecaApp.IncorrectOptionException.class)
-    public void invalidUserInputShouldThrowErrorMessage()throws BibliotecaApp.IncorrectOptionException {
+    public void invalidUserInputShouldThrowErrorMessage()throws BibliotecaApp.IncorrectOptionException, BibliotecaApp.quitException {
         BibliotecaApp.pickMenuOption("k");
+    }
+    @Test(expected = BibliotecaApp.quitException.class)
+    public void userInputqShouldQuit()throws BibliotecaApp.IncorrectOptionException, BibliotecaApp.quitException {
+        BibliotecaApp.pickMenuOption("q");
     }
 
     @After

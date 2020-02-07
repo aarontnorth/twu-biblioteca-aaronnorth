@@ -14,6 +14,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class ExampleTest {
+    static BibliotecaApp testBibliotecaApp;
     static Biblioteca testBiblioteca;
     static PrintStream userInput;
 
@@ -53,6 +54,11 @@ public class ExampleTest {
     @Test
     public void checkOutShouldReturnFalseIfBookNotAvailable(){
         assertFalse(testBiblioteca.checkOutBook("Not a book"));
+    }
+
+    @Test(expected=BibliotecaApp.BookUnavailableException.class)
+    public void finishCheckOutShouldThrowErrorIfBookUnavailable() throws BibliotecaApp.BookUnavailableException {
+        BibliotecaApp.finishCheckOut(false);
     }
 
 }

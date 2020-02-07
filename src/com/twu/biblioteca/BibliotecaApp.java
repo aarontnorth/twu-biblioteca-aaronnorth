@@ -9,6 +9,10 @@ public class BibliotecaApp {
     static Scanner myScanner;
     static Biblioteca myBiblioteca;
 
+    BibliotecaApp(Biblioteca biblioteca){
+        myBiblioteca = biblioteca;
+    }
+
     public static void main(String[] args) {
         myScanner = new Scanner(System.in);  // Create a Scanner object
         myBiblioteca = new Biblioteca();
@@ -51,22 +55,31 @@ public class BibliotecaApp {
             myBiblioteca.printAvailableBooks();
         }
         else if(userInput.equals("Check")){
-            checkOut(); //error
+            startCheckOut();
         }
         else{
             throw new IncorrectOptionException(errorMessage);
         }
     }
 
-    static void checkOut() throws IncorrectOptionException{
+    static void startCheckOut() {
         System.out.println("Type the exact title of the book you would like to checkout: ");
         String bookTitle = getUserInput();
         boolean successfulCheckout = myBiblioteca.checkOutBook(bookTitle);
+        try {
+            finishCheckOut(successfulCheckout);
+        } catch (BookUnavailableException e) {
+            System.out.println("Sorry, that book is not available");
+        }
+
+    }
+
+    static void finishCheckOut(boolean successfulCheckout) throws BookUnavailableException{
         if(successfulCheckout){
             System.out.println("Thank you! Enjoy the book");
         }
         else{
-            throw new IncorrectOptionException(errorMessage);
+            throw new BookUnavailableException(errorMessage);
         }
 
     }
@@ -93,6 +106,12 @@ public class BibliotecaApp {
 
     static class IncorrectOptionException extends Exception {
         public IncorrectOptionException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
+    static class BookUnavailableException extends Exception {
+        public BookUnavailableException(String errorMessage) {
             super(errorMessage);
         }
     }

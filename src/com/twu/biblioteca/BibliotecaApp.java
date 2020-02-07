@@ -7,6 +7,7 @@ public class BibliotecaApp {
     static String errorMessage = "Please select a valid option!";
     static Scanner myScanner;
     static Biblioteca myBiblioteca;
+    static String userID = "123-4567";
 
     BibliotecaApp(Biblioteca biblioteca){
         myBiblioteca = biblioteca;
@@ -80,7 +81,7 @@ public class BibliotecaApp {
         }
         System.out.println("Type the exact title of the " + type + " you would like to checkout: ");
         String title = getUserInput();
-        boolean successfulCheckout = myBiblioteca.checkOut(title,input);
+        boolean successfulCheckout = myBiblioteca.checkOut(title,input,userID);
         try {
             finishCheckOut(successfulCheckout,type);
         } catch (UnavailableException e) {

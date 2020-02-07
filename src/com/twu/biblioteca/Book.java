@@ -5,6 +5,7 @@ public class Book {
     String title;
     String author;
     String yearPublished;
+    String checkedOutTo;
 
     Book(String title){
         this.title = title;

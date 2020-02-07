@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Biblioteca {
     static HashMap<String,Book> availableBooks;
     static HashMap<String,Movie> availableMovies;
+    static HashMap<String,Book> checkedOutBooks;
     String libraryID;
 
     Biblioteca(String ID){
@@ -20,6 +21,7 @@ public class Biblioteca {
         availableMovies.put("Little Women",new Movie("Little Women","2019","Greta Gerwig","10"));
         availableMovies.put("Lilo and Stitch",new Movie("Lilo and Stitch","2002","Alan Silvestri(not)","unrated"));
         availableMovies.put("National Treasure", new Movie("National Treasure","2004","Jon Turtletaub","10"));
+        checkedOutBooks = new HashMap<String, Book>();
     }
 
 
@@ -33,18 +35,20 @@ public class Biblioteca {
         }
     }
 
-    boolean checkOut(String title, char type){
+    boolean checkOut(String title, char type, String userID){
         switch(type){
             case 'B':
-                return checkOutBook(title);
+                return checkOutBook(title,userID);
             case 'M':
                 return checkOutMovie(title);
         }
         return false;
     }
 
-    boolean checkOutBook(String bookTitle) {
+    boolean checkOutBook(String bookTitle, String userID) {
         if(availableBooks.containsKey(bookTitle)) {
+            availableBooks.get(bookTitle).checkedOutTo = userID;
+            checkedOutBooks.put(bookTitle, availableBooks.get(bookTitle));
             availableBooks.remove(bookTitle);
             return true;
         }

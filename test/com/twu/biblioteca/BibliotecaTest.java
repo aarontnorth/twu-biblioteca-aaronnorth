@@ -17,7 +17,7 @@ public class BibliotecaTest {
 
     @Test
     public void checkOutShouldRemoveBookFromList(){
-        testBiblioteca.checkOutBook("Little Women");
+        testBiblioteca.checkOutBook("Little Women","");
         for(Book book: testBiblioteca.availableBooks.values())
             assertNotEquals(book.toString(),"Little Women");
     }
@@ -25,14 +25,13 @@ public class BibliotecaTest {
 
     @Test
     public void checkOutShouldGiveConfirmation(){
-        assertTrue(testBiblioteca.checkOutBook("Little Women"));
+        assertTrue(testBiblioteca.checkOutBook("Little Women",""));
     }
 
     @Test
     public void checkOutShouldReturnFalseIfBookNotAvailable(){
-        assertFalse(testBiblioteca.checkOutBook("Not a book"));
+        assertFalse(testBiblioteca.checkOutBook("Not a book",""));
     }
-
 
     @Test
     public void checkInShouldUpdateBookList(){
@@ -40,5 +39,10 @@ public class BibliotecaTest {
         assertTrue(testBiblioteca.availableBooks.containsKey("The Road"));
     }
 
+    @Test
+    public void checkOutShouldAssignBookToUser(){
+        testBiblioteca.checkOutBook("Little Women","123-4567");
+        assertTrue(testBiblioteca.checkedOutBooks.get("Little Women").checkedOutTo.equals("123-4567"));
+    }
 
 }

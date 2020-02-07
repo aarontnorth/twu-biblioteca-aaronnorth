@@ -21,11 +21,6 @@ public class BibliotecaApp {
         runMainMenu();
     }
 
-    static String getUserInput(){
-        String userInput = myScanner.nextLine();  // Read user input
-        return userInput;
-    }
-
     private static void runMainMenu() {
         Boolean userWantsToBrowse = true;
         while(userWantsToBrowse) {
@@ -41,21 +36,27 @@ public class BibliotecaApp {
         }
     }
 
+
     static void showMainMenu() {
+        System.out.println();
         System.out.println("What would you like to do? Type the command listed in parentheses");
-        System.out.println("See available books (Books)");
-        System.out.println("Check out a book (Check)");
+        System.out.println("See available books (B)");
+        System.out.println("Check out a book (CO)");
+        System.out.println("Check in a book (CI)");
     }
 
     static void pickMenuOption(String userInput) throws IncorrectOptionException, quitException {
         if(userInput.equals("q")){
             throw new quitException("User wants to quit");
         }
-        else if(userInput.equals("Books")){
+        else if(userInput.equals("B")){
             myBiblioteca.printAvailableBooks();
         }
-        else if(userInput.equals("Check")){
+        else if(userInput.equals("CO")){
             startCheckOut();
+        }
+        else if(userInput.equals("CI")){
+            checkIn();
         }
         else{
             throw new IncorrectOptionException(errorMessage);
@@ -84,6 +85,11 @@ public class BibliotecaApp {
 
     }
 
+    static void checkIn(){
+        System.out.println("Type the exact title of the book you would like to check in: ");
+        myBiblioteca.checkIn(getUserInput());
+    }
+
     static void printErrorMessage() {
         System.out.println(errorMessage);
         }
@@ -97,6 +103,12 @@ public class BibliotecaApp {
         return myBiblioteca.availableBooks;
     }
 
+    static String getUserInput(){
+        System.out.println();
+        String userInput = myScanner.nextLine();  // Read user input
+        System.out.println();
+        return userInput;
+    }
 
     static class quitException extends Exception {
         public quitException(String errorMessage) {

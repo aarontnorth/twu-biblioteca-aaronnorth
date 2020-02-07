@@ -61,4 +61,10 @@ public class ExampleTest {
         BibliotecaApp.finishCheckOut(false);
     }
 
+    @Test
+    public void checkInShouldUpdateBookList(){
+        testBiblioteca.checkIn("The Road");
+        assertTrue(testBiblioteca.availableBooks.containsKey("The Road"));
+    }
+
 }

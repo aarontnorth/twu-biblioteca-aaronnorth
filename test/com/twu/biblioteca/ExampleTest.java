@@ -19,9 +19,6 @@ public class ExampleTest {
 
     @Before
     public void init(){
-        OutputStream os = new ByteArrayOutputStream();
-        PrintStream userInput = new PrintStream(os);
-        System.setOut(userInput);
         availableBooks = BibliotecaApp.setUpAvailableBooks();
     }
 
@@ -39,11 +36,9 @@ public class ExampleTest {
         assertEquals(myBook.toString(),"Hello | John | 1965");
     }
 
-    @Test
-    public void invalidUserInputShouldGiveErrorMessage(){
-        //BibliotecaApp.pickMenuOption("k");
-        //System.out.println("fudge");
-        //assertEquals("Please select a valid option!",userInput);
+    @Test(expected = BibliotecaApp.IncorrectOptionException.class)
+    public void invalidUserInputShouldThrowErrorMessage()throws BibliotecaApp.IncorrectOptionException {
+        BibliotecaApp.pickMenuOption("k");
     }
 
     @After

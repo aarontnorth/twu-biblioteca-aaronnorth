@@ -18,7 +18,12 @@ public class BibliotecaApp {
     private static void runMainMenu(Scanner myObj) {
         showMainMenu(myObj);
         String userInput = myObj.nextLine();  // Read user input
-        pickMenuOption(userInput);
+        try {
+            pickMenuOption(userInput);
+        } catch (IncorrectOptionException e) {
+            printErrorMessage();
+        }
+
     }
 
     static void showMainMenu(Scanner myObj) {
@@ -26,19 +31,18 @@ public class BibliotecaApp {
         System.out.println("See available books (Books)");
     }
 
-    static void pickMenuOption(String userInput) {
+    static void pickMenuOption(String userInput) throws IncorrectOptionException {
         if(userInput.equals("Books")){
             printAvailableBooks();
         }
         else{
-            printErrorMessage();
+            throw new IncorrectOptionException(errorMessage);
         }
     }
 
-    static String printErrorMessage() {
+    static void printErrorMessage() {
         System.out.println(errorMessage);
-        return errorMessage;
-    }
+        }
 
     private static void printAvailableBooks() {
         System.out.println("Here are our currently available books:");
@@ -59,6 +63,12 @@ public class BibliotecaApp {
             bookList = bookList + book.toString() + "\n";
         }
         return bookList;
+    }
+
+    public static class IncorrectOptionException extends Exception {
+        public IncorrectOptionException(String errorMessage) {
+            super(errorMessage);
+        }
     }
 
 

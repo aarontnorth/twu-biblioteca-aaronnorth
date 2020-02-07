@@ -12,7 +12,7 @@ public class BibliotecaTest {
     @Before
     public void init(){
         testBiblioteca = new Biblioteca("001");
-        testBiblioteca.setUpAvailableInventory();
+        testBiblioteca.setUpBiblioteca();
     }
 
     @Test
@@ -45,4 +45,15 @@ public class BibliotecaTest {
         assertTrue(testBiblioteca.checkedOutBooks.get("Little Women").checkedOutTo.equals("123-4567"));
     }
 
+    @Test
+    public void myPhoneShouldBe8675309(){
+        User me = testBiblioteca.getUserByID("123-4567");
+        assertTrue(me.phoneNumber.equals("867-5309"));
+    }
+
+    @Test
+    public void myInfoShouldBeRight(){
+        User me = testBiblioteca.getUserByID(("123-4567"));
+        assertTrue(me.getUserInfo().equals("Jack | jack@jack.com | 867-5309"));
+    }
 }

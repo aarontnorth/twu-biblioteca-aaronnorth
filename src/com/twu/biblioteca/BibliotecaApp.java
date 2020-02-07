@@ -16,7 +16,7 @@ public class BibliotecaApp {
     public static void main(String[] args) {
         myScanner = new Scanner(System.in);  // Create a Scanner object
         myBiblioteca = new Biblioteca("001");
-        myBiblioteca.setUpAvailableInventory();
+        myBiblioteca.setUpBiblioteca();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         System.out.println("Please sign in with your user ID (xxx-xxxx)");
         userID = getUserInput();

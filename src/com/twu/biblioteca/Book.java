@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 public class Book {
+    String libraryIBelongTo;
     String title;
     String author;
     String yearPublished;
@@ -11,10 +12,11 @@ public class Book {
         this.yearPublished = "IDK";
     }
 
-    Book(String title,String author,String year){
+    Book(String title,String author,String year,String bibliotecaID){
         this.title = title;
         this.author = author;
         this.yearPublished = year;
+        this.libraryIBelongTo = bibliotecaID;
     }
 
     String getBookInfo(){

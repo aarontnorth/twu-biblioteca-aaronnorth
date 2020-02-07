@@ -1,17 +1,7 @@
 package com.twu.biblioteca;
 
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.junit.Assert.*;
 
 public class BibliotecaAppTest {
 
@@ -29,6 +19,11 @@ public class BibliotecaAppTest {
     @Test(expected=BibliotecaApp.BookUnavailableException.class)
     public void finishCheckOutShouldThrowErrorIfBookUnavailable() throws BibliotecaApp.BookUnavailableException {
         BibliotecaApp.finishCheckOut(false);
+    }
+
+    @Test(expected=BibliotecaApp.BookDoesNotBelongException.class)
+    public void checkInShouldThrowErrorIfBookDoesNotBelongToLibrary() throws BibliotecaApp.BookDoesNotBelongException {
+        BibliotecaApp.finishCheckIn(false);
     }
 
 }

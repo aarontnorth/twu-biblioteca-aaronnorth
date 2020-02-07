@@ -15,8 +15,8 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         myScanner = new Scanner(System.in);  // Create a Scanner object
-        myBiblioteca = new Biblioteca();
-        setUpAvailableBooks();
+        myBiblioteca = new Biblioteca("001");
+        myBiblioteca.setUpAvailableBooks();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         runMainMenu();
     }
@@ -56,7 +56,7 @@ public class BibliotecaApp {
             startCheckOut();
         }
         else if(userInput.equals("CI")){
-            checkIn();
+            startCheckIn();
         }
         else{
             throw new IncorrectOptionException(errorMessage);
@@ -85,22 +85,32 @@ public class BibliotecaApp {
 
     }
 
-    static void checkIn(){
+    static void startCheckIn(){
         System.out.println("Type the exact title of the book you would like to check in: ");
-        myBiblioteca.checkIn(getUserInput());
+        String title = getUserInput();
+        System.out.println("Type the library ID associated with your book");
+        String ID = getUserInput();
+        boolean success = myBiblioteca.checkIn(title, ID);
+        try {
+            finishCheckIn(success);
+        } catch (BookDoesNotBelongException e) {
+            System.out.println("That is not a valid book to return.");
+        }
+
+    }
+
+    static void finishCheckIn(boolean successfulCheckout) throws BookDoesNotBelongException{
+        if(successfulCheckout){
+            System.out.println("Thank you for returning the book");
+        }
+        else{
+            throw new BookDoesNotBelongException(errorMessage);
+        }
+
     }
 
     static void printErrorMessage() {
         System.out.println(errorMessage);
-        }
-
-
-    static HashMap<String, Book> setUpAvailableBooks(){
-        myBiblioteca.availableBooks = new HashMap<String, Book>();
-        myBiblioteca.availableBooks.put("Great Expectations",new Book("Great Expectations","Someone Important","1929 probably"));
-        myBiblioteca.availableBooks.put("Treasure Island",new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
-        myBiblioteca.availableBooks.put("Little Women",new Book("Little Women","An Icon","1865 I guess"));
-        return myBiblioteca.availableBooks;
     }
 
     static String getUserInput(){
@@ -129,4 +139,9 @@ public class BibliotecaApp {
     }
 
 
+    static class BookDoesNotBelongException extends Exception {
+        public BookDoesNotBelongException(String errorMessage){
+            super(errorMessage);
+        }
+    }
 }

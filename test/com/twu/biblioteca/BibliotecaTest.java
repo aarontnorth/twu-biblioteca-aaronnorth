@@ -11,8 +11,8 @@ public class BibliotecaTest {
 
     @Before
     public void init(){
-        testBiblioteca = new Biblioteca();
-        testBiblioteca.availableBooks = BibliotecaApp.setUpAvailableBooks();
+        testBiblioteca = new Biblioteca("001");
+        testBiblioteca.setUpAvailableBooks();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class BibliotecaTest {
 
     @Test
     public void checkInShouldUpdateBookList(){
-        testBiblioteca.checkIn("The Road");
+        testBiblioteca.checkIn("The Road","001");
         assertTrue(testBiblioteca.availableBooks.containsKey("The Road"));
     }
 

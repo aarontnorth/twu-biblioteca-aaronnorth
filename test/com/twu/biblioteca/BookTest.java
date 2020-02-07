@@ -8,7 +8,7 @@ public class BookTest {
 
     @Test
     public void booksShouldHaveAuthorAndYear(){
-        Book myBook = new Book("Hello","John","1965");
+        Book myBook = new Book("Hello","John","1965", "001");
         assertEquals(myBook.getBookInfo(),"Hello | John | 1965");
     }
 }

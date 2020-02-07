@@ -4,9 +4,28 @@ import java.util.HashMap;
 
 public class Biblioteca {
     static HashMap<String,Book> availableBooks;
+    String libraryID;
 
-    void checkIn(String bookTitle) {
-        availableBooks.put(bookTitle, new Book(bookTitle));
+    Biblioteca(String ID){
+        libraryID = ID;
+    }
+
+    void setUpAvailableBooks(){
+        this.availableBooks = new HashMap<String, Book>();
+        this.availableBooks.put("Great Expectations",new Book("Great Expectations","Someone Important","1929 probably",this.libraryID));
+        this.availableBooks.put("Treasure Island",new Book("Treasure Island","Robert Louis Stevenson","Like 1850",this.libraryID));
+        this.availableBooks.put("Little Women",new Book("Little Women","An Icon","1865 I guess",this.libraryID));
+    }
+
+
+    boolean checkIn(String bookTitle,String ID) {
+        if(ID.equals(this.libraryID)){
+            availableBooks.put(bookTitle, new Book(bookTitle));
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     boolean checkOutBook(String bookTitle) {

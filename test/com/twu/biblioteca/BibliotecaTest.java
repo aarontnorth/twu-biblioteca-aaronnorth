@@ -12,7 +12,7 @@ public class BibliotecaTest {
     @Before
     public void init(){
         testBiblioteca = new Biblioteca("001");
-        testBiblioteca.setUpAvailableBooks();
+        testBiblioteca.setUpAvailableInventory();
     }
 
     @Test

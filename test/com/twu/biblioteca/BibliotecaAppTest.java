@@ -16,14 +16,19 @@ public class BibliotecaAppTest {
         BibliotecaApp.pickMenuOption("q");
     }
 
-    @Test(expected=BibliotecaApp.BookUnavailableException.class)
-    public void finishCheckOutShouldThrowErrorIfBookUnavailable() throws BibliotecaApp.BookUnavailableException {
-        BibliotecaApp.finishCheckOut(false);
+    @Test(expected= BibliotecaApp.UnavailableException.class)
+    public void finishCheckOutShouldThrowErrorIfBookUnavailable() throws BibliotecaApp.UnavailableException {
+        BibliotecaApp.finishCheckOut(false,"book");
     }
 
     @Test(expected=BibliotecaApp.BookDoesNotBelongException.class)
     public void checkInShouldThrowErrorIfBookDoesNotBelongToLibrary() throws BibliotecaApp.BookDoesNotBelongException {
         BibliotecaApp.finishCheckIn(false);
+    }
+
+    @Test(expected=BibliotecaApp.UnavailableException.class)
+    public void finishCheckOutShouldThrowErrorIfMovieUnavailable() throws  BibliotecaApp.UnavailableException {
+        BibliotecaApp.finishCheckOut(false,"movie");
     }
 
 }

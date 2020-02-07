@@ -1,16 +1,18 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    static ArrayList<Book> availableBooks;
     static String errorMessage = "Please select a valid option!";
     static Scanner myScanner;
+    static Biblioteca myBiblioteca;
 
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);  // Create a Scanner object
+        myBiblioteca = new Biblioteca();
         setUpAvailableBooks();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         runMainMenu();
@@ -45,7 +47,10 @@ public class BibliotecaApp {
             throw new quitException("User wants to quit");
         }
         else if(userInput.equals("Books")){
-            printAvailableBooks();
+            myBiblioteca.printAvailableBooks();
+        }
+        else if(userInput.equals("Check")){
+            myBiblioteca.checkOutBook(""); //error
         }
         else{
             throw new IncorrectOptionException(errorMessage);
@@ -56,26 +61,15 @@ public class BibliotecaApp {
         System.out.println(errorMessage);
         }
 
-    private static void printAvailableBooks() {
-        System.out.println("Here are our currently available books:");
-        System.out.println(getListOfAvailableBooks());
+
+    public static HashMap<String, Book> setUpAvailableBooks(){
+        myBiblioteca.availableBooks = new HashMap<String, Book>();
+        myBiblioteca.availableBooks.put("Great Expectations",new Book("Great Expectations","Someone Important","1929 probably"));
+        myBiblioteca.availableBooks.put("Treasure Island",new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
+        myBiblioteca.availableBooks.put("Little Women",new Book("Little Women","An Icon","1865 I guess"));
+        return myBiblioteca.availableBooks;
     }
 
-    public static ArrayList<Book> setUpAvailableBooks(){
-        availableBooks = new ArrayList<Book>();
-        availableBooks.add(new Book("Great Expectations","Someone Important","1929 probably"));
-        availableBooks.add(new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
-        availableBooks.add(new Book("Little Women","An Icon","1865 I guess"));
-        return availableBooks;
-    }
-
-    static String getListOfAvailableBooks(){
-        String bookList = "";
-        for(Book book: availableBooks){
-            bookList = bookList + book.toString() + "\n";
-        }
-        return bookList;
-    }
 
     public static class quitException extends Exception {
         public quitException(String errorMessage) {

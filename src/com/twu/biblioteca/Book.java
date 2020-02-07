@@ -11,8 +11,12 @@ public class Book {
         this.yearPublished = year;
     }
 
+    String getBookInfo(){
+        return title + " | " + author + " | " + yearPublished;
+    }
+
     @Override
     public String toString(){
-        return title + " | " + author + " | " + yearPublished;
+        return title;
     }
 }

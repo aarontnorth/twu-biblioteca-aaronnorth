@@ -45,4 +45,14 @@ public class ExampleTest {
             assertNotEquals(book.toString(),"Little Women");
     }
 
+    @Test
+    public void checkOutShouldGiveConfirmation(){
+        assertTrue(testBiblioteca.checkOutBook("Little Women"));
+    }
+
+    @Test
+    public void checkOutShouldReturnFalseIfBookNotAvailable(){
+        assertFalse(testBiblioteca.checkOutBook("Not a book"));
+    }
+
 }

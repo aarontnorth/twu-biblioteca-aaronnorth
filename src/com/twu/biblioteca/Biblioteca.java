@@ -5,11 +5,13 @@ import java.util.HashMap;
 public class Biblioteca {
     static HashMap<String,Book> availableBooks;
 
-    void checkOutBook(String bookTitle) {
+    boolean checkOutBook(String bookTitle) {
         if(availableBooks.containsKey(bookTitle)) {
             availableBooks.remove(bookTitle);
+            return true;
         }
-        //System.out.println(getListOfAvailableBooks());
+        return false;
+        //System.out.println(getListOfAvailableBooks())
     }
 
     void printAvailableBooks() {

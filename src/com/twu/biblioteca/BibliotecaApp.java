@@ -58,11 +58,17 @@ public class BibliotecaApp {
         }
     }
 
-    static void checkOut() {
+    static void checkOut() throws IncorrectOptionException{
         System.out.println("Type the exact title of the book you would like to checkout: ");
         String bookTitle = getUserInput();
-        myBiblioteca.checkOutBook(bookTitle);
-        myBiblioteca.printAvailableBooks();
+        boolean successfulCheckout = myBiblioteca.checkOutBook(bookTitle);
+        if(successfulCheckout){
+            System.out.println("Thank you! Enjoy the book");
+        }
+        else{
+            throw new IncorrectOptionException(errorMessage);
+        }
+
     }
 
     static void printErrorMessage() {

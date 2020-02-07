@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -11,7 +10,7 @@ public class BibliotecaApp {
     static Biblioteca myBiblioteca;
 
     public static void main(String[] args) {
-        Scanner myScanner = new Scanner(System.in);  // Create a Scanner object
+        myScanner = new Scanner(System.in);  // Create a Scanner object
         myBiblioteca = new Biblioteca();
         setUpAvailableBooks();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
@@ -26,6 +25,7 @@ public class BibliotecaApp {
     private static void runMainMenu() {
         Boolean userWantsToBrowse = true;
         while(userWantsToBrowse) {
+            showMainMenu();
             String userInput = getUserInput();
             try {
                 pickMenuOption(userInput);
@@ -40,6 +40,7 @@ public class BibliotecaApp {
     static void showMainMenu() {
         System.out.println("What would you like to do? Type the command listed in parentheses");
         System.out.println("See available books (Books)");
+        System.out.println("Check out a book (Check)");
     }
 
     static void pickMenuOption(String userInput) throws IncorrectOptionException, quitException {
@@ -50,11 +51,18 @@ public class BibliotecaApp {
             myBiblioteca.printAvailableBooks();
         }
         else if(userInput.equals("Check")){
-            myBiblioteca.checkOutBook(""); //error
+            checkOut(); //error
         }
         else{
             throw new IncorrectOptionException(errorMessage);
         }
+    }
+
+    static void checkOut() {
+        System.out.println("Type the exact title of the book you would like to checkout: ");
+        String bookTitle = getUserInput();
+        myBiblioteca.checkOutBook(bookTitle);
+        myBiblioteca.printAvailableBooks();
     }
 
     static void printErrorMessage() {
@@ -62,7 +70,7 @@ public class BibliotecaApp {
         }
 
 
-    public static HashMap<String, Book> setUpAvailableBooks(){
+    static HashMap<String, Book> setUpAvailableBooks(){
         myBiblioteca.availableBooks = new HashMap<String, Book>();
         myBiblioteca.availableBooks.put("Great Expectations",new Book("Great Expectations","Someone Important","1929 probably"));
         myBiblioteca.availableBooks.put("Treasure Island",new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
@@ -71,13 +79,13 @@ public class BibliotecaApp {
     }
 
 
-    public static class quitException extends Exception {
+    static class quitException extends Exception {
         public quitException(String errorMessage) {
             super(errorMessage);
         }
     }
 
-    public static class IncorrectOptionException extends Exception {
+    static class IncorrectOptionException extends Exception {
         public IncorrectOptionException(String errorMessage) {
             super(errorMessage);
         }

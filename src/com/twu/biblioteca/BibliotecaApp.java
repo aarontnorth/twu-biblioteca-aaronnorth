@@ -18,6 +18,8 @@ public class BibliotecaApp {
         myBiblioteca = new Biblioteca("001");
         myBiblioteca.setUpAvailableInventory();
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
+        System.out.println("Please sign in with your user ID (xxx-xxxx)");
+        userID = getUserInput();
         runMainMenu();
     }
 

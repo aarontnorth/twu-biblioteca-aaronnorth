@@ -12,7 +12,22 @@ public class BibliotecaTest {
     @Before
     public void init(){
         testBiblioteca = new Biblioteca("001");
-        testBiblioteca.setUpBiblioteca();
+    }
+
+    @Before
+    public void setupBiblioteca() {
+        testBiblioteca.addOwnedBook(new Book("Great Expectations", "Someone Important", "1929 probably"));
+        testBiblioteca.addOwnedBook(new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
+        testBiblioteca.addOwnedBook(new Book("Little Women","An Icon","1865 I guess"));
+
+        testBiblioteca.addOwnedMovie(new Movie("Little Women","2019","Greta Gerwig","10"));
+        testBiblioteca.addOwnedMovie(new Movie("Lilo and Stitch","2002","Alan Silvestri(not)","unrated"));
+        testBiblioteca.addOwnedMovie(new Movie("National Treasure","2004","Jon Turtletaub","10"));
+
+        testBiblioteca.addNewLibraryGuest(new User("Jack","jack@jack.com","867-5309","000-0000"));
+        testBiblioteca.addNewLibraryGuest(new User("Jill","jill@jack.com","867-0000","000-0001"));
+        testBiblioteca.addNewLibraryGuest(new User("John","john@jack.com","867-1111","123-4567"));
+
     }
 
     @Test
@@ -33,27 +48,21 @@ public class BibliotecaTest {
         assertFalse(testBiblioteca.checkOutBook("Not a book",""));
     }
 
-    @Test
-    public void checkInShouldUpdateBookList(){
-        testBiblioteca.checkIn("The Road","001");
-        assertTrue(testBiblioteca.availableBooks.containsKey("The Road"));
-    }
-
-    @Test
-    public void checkOutShouldAssignBookToUser(){
-        testBiblioteca.checkOutBook("Little Women","123-4567");
-        assertTrue(testBiblioteca.checkedOutBooks.get("Little Women").checkedOutTo.equals("123-4567"));
-    }
+    //@Test
+    //public void checkOutShouldAssignBookToUser(){
+     //   testBiblioteca.checkOutBook("Little Women","123-4567");
+      //  assertTrue(testBiblioteca.checkedOutBooks.get("Little Women").checkedOutTo.equals("123-4567"));
+    //}
 
     @Test
     public void myPhoneShouldBe8675309(){
-        User me = testBiblioteca.getUserByID("123-4567");
+        User me = testBiblioteca.getUserByID("000-0000");
         assertTrue(me.phoneNumber.equals("867-5309"));
     }
 
     @Test
     public void myInfoShouldBeRight(){
-        User me = testBiblioteca.getUserByID(("123-4567"));
+        User me = testBiblioteca.getUserByID(("000-0000"));
         assertTrue(me.getUserInfo().equals("Jack | jack@jack.com | 867-5309"));
     }
 }

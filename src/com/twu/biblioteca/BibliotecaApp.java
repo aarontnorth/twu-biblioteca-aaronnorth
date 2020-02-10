@@ -16,12 +16,27 @@ public class BibliotecaApp {
     public static void main(String[] args) {
         myScanner = new Scanner(System.in);  // Create a Scanner object
         myBiblioteca = new Biblioteca("001");
-        myBiblioteca.setUpBiblioteca();
+        setupBiblioteca(myBiblioteca);
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         System.out.println("Please sign in with your user ID (xxx-xxxx)");
         userID = getUserInput();
         runMainMenu();
     }
+
+    public static void setupBiblioteca(Biblioteca myBiblioteca) {
+        myBiblioteca.addOwnedBook(new Book("Great Expectations", "Someone Important", "1929 probably"));
+        myBiblioteca.addOwnedBook(new Book("Treasure Island","Robert Louis Stevenson","Like 1850"));
+        myBiblioteca.addOwnedBook(new Book("Little Women","An Icon","1865 I guess"));
+
+        myBiblioteca.addOwnedMovie(new Movie("Little Women","2019","Greta Gerwig","10"));
+        myBiblioteca.addOwnedMovie(new Movie("Lilo and Stitch","2002","Alan Silvestri(not)","unrated"));
+        myBiblioteca.addOwnedMovie( new Movie("National Treasure","2004","Jon Turtletaub","10"));
+
+        myBiblioteca.addNewLibraryGuest(new User("Jack","jack@jack.com","867-5309","000-0000"));
+        myBiblioteca.addNewLibraryGuest(new User("Jill","jill@jack.com","867-0000","000-0001"));
+        myBiblioteca.addNewLibraryGuest(new User("John","john@jack.com","867-1111","123-4567"));
+    }
+
 
     private static void runMainMenu() {
         Boolean userWantsToBrowse = true;
@@ -78,8 +93,10 @@ public class BibliotecaApp {
         switch(input){
             case 'B':
                 type = "book";
+                break;
             case 'M':
                 type = "movie";
+                break;
         }
         System.out.println("Type the exact title of the " + type + " you would like to checkout: ");
         String title = getUserInput();
@@ -103,11 +120,14 @@ public class BibliotecaApp {
     }
 
     static void startCheckIn(){
-        System.out.println("Type the exact title of the book you would like to check in: ");
-        String title = getUserInput();
-        System.out.println("Type the library ID associated with your book");
-        String ID = getUserInput();
-        boolean success = myBiblioteca.checkIn(title, ID);
+        System.out.println("Type the ID associated with your book");
+        Integer ID = null;
+        try {
+            ID = Integer.parseInt(getUserInput());
+        } catch (NumberFormatException e) {
+            System.out.println("Please try again with a valid ID");
+        }
+        boolean success = myBiblioteca.checkIn(ID);
         try {
             finishCheckIn(success);
         } catch (BookDoesNotBelongException e) {

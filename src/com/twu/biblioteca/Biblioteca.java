@@ -1,45 +1,56 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Biblioteca {
     static HashMap<String,User> libraryGuests;
     static HashMap<String,Book> availableBooks;
     static HashMap<String,Movie> availableMovies;
-    static HashMap<String,Book> checkedOutBooks;
+    static HashMap<Integer,String> checkedOutBooks; //Integer key is bookID, String value is UserID
+    static HashMap<Integer,Book> booksOwnedByLibrary;
+    //static ArrayList<Boolean> isBookCheckedOut;
     String libraryID;
+    int numOwnedBooks;
 
     Biblioteca(String ID){
         libraryID = ID;
+        initBiblioteca();
     }
 
-    void setUpBiblioteca(){
-        this.availableBooks = new HashMap<String, Book>();
-        this.availableMovies = new HashMap<String, Movie>();
+    void addOwnedBook(Book book){
+        numOwnedBooks++;
+        //isBookCheckedOut.add(numOwnedBooks,false);
+        book.bookID = numOwnedBooks;
+        booksOwnedByLibrary.put(book.bookID,book);
+        availableBooks.put(book.title,book);
+    }
+
+    void addOwnedMovie(Movie movie){
+        availableMovies.put(movie.title,movie);
+    }
+
+    void addNewLibraryGuest(User user){
+        libraryGuests.put(user.userID,user);
+    }
+
+    private void initBiblioteca(){
+        availableBooks = new HashMap<String, Book>();
+        availableMovies = new HashMap<String, Movie>();
+        booksOwnedByLibrary = new HashMap<Integer, Book>();
         libraryGuests = new HashMap<String, User>();
-        checkedOutBooks = new HashMap<String, Book>();
-        this.availableBooks.put("Great Expectations",new Book("Great Expectations","Someone Important","1929 probably",this.libraryID));
-        this.availableBooks.put("Treasure Island",new Book("Treasure Island","Robert Louis Stevenson","Like 1850",this.libraryID));
-        this.availableBooks.put("Little Women",new Book("Little Women","An Icon","1865 I guess",this.libraryID));
-        availableMovies.put("Little Women",new Movie("Little Women","2019","Greta Gerwig","10"));
-        availableMovies.put("Lilo and Stitch",new Movie("Lilo and Stitch","2002","Alan Silvestri(not)","unrated"));
-        availableMovies.put("National Treasure", new Movie("National Treasure","2004","Jon Turtletaub","10"));
-        checkedOutBooks = new HashMap<String, Book>();
-        libraryGuests.put("000-0000",new User("Jack","jack@jack.com","867-5309","000-0000"));
-        libraryGuests.put("000-0001",new User("Jill","jill@jack.com","867-0000","000-0001"));
-        libraryGuests.put("000-0002",new User("John","john@jack.com","867-1111","000-0002"));
-        libraryGuests.put("123-4567",new User("Jack","jack@jack.com","867-5309","123-4567"));
+        checkedOutBooks = new HashMap<Integer, String>();
+        //isBookCheckedOut = new ArrayList<Boolean>();
+        numOwnedBooks = 0;
     }
 
 
-    boolean checkIn(String bookTitle,String ID) {
-        if(ID.equals(this.libraryID)){
-            availableBooks.put(bookTitle, new Book(bookTitle));
+    boolean checkIn(Integer bookID) {
+        if(booksOwnedByLibrary.containsKey(bookID) && checkedOutBooks.containsKey(bookID)){
+            availableBooks.put(booksOwnedByLibrary.get(bookID).title, booksOwnedByLibrary.get(bookID));
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
 
     boolean checkOut(String title, char type, String userID){
@@ -54,8 +65,7 @@ public class Biblioteca {
 
     boolean checkOutBook(String bookTitle, String userID) {
         if(availableBooks.containsKey(bookTitle)) {
-            availableBooks.get(bookTitle).checkedOutTo = userID;
-            checkedOutBooks.put(bookTitle, availableBooks.get(bookTitle));
+            checkedOutBooks.put(availableBooks.get(bookTitle).bookID, userID);
             availableBooks.remove(bookTitle);
             return true;
         }

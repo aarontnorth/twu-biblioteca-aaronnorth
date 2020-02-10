@@ -1,10 +1,13 @@
 package com.twu.biblioteca;
 
+import java.util.HashMap;
+
 public class User {
     String name;
     String email;
     String phoneNumber;
     String userID;
+    //HashMap<String,Book> checkedOutBooks;
 
     User(String name,String email,String phoneNumber,String ID){
         this.name = name;

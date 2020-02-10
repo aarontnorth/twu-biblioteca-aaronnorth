@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class BibliotecaAppTest {
 
-    static BibliotecaApp testBibliotecaApp;
+    //static BibliotecaApp testBibliotecaApp;
 
     @Test(expected = BibliotecaApp.IncorrectOptionException.class)
     public void invalidUserInputShouldThrowErrorMessage()throws BibliotecaApp.IncorrectOptionException, BibliotecaApp.quitException {

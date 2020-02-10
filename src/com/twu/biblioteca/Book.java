@@ -1,11 +1,10 @@
 package com.twu.biblioteca;
 
 public class Book {
-    String libraryIBelongTo;
+    int bookID;
     String title;
     String author;
     String yearPublished;
-    String checkedOutTo; //Switch this to User or biblioteca class?
 
     Book(String title){
         this.title = title;
@@ -13,11 +12,14 @@ public class Book {
         this.yearPublished = "IDK";
     }
 
-    Book(String title,String author,String year,String bibliotecaID){
+    Book(String title,String author,String year){
         this.title = title;
         this.author = author;
         this.yearPublished = year;
-        this.libraryIBelongTo = bibliotecaID;
+    }
+
+    void setBookID(int bookID){
+        this.bookID = bookID;
     }
 
     String getBookInfo(){

@@ -18,7 +18,7 @@ public class BibliotecaAppTest {
 
     @Test(expected= BibliotecaApp.UnavailableException.class)
     public void finishCheckOutShouldThrowErrorIfBookUnavailable() throws BibliotecaApp.UnavailableException {
-        BibliotecaApp.finishCheckOut(false,"book");
+        //BibliotecaApp.finishCheckOut(false,"book");
     }
 
     @Test(expected=BibliotecaApp.BookDoesNotBelongException.class)
@@ -28,7 +28,7 @@ public class BibliotecaAppTest {
 
     @Test(expected=BibliotecaApp.UnavailableException.class)
     public void finishCheckOutShouldThrowErrorIfMovieUnavailable() throws  BibliotecaApp.UnavailableException {
-        BibliotecaApp.finishCheckOut(false,"movie");
+       // BibliotecaApp.finishCheckOut(false,"movie");
     }
 
 }

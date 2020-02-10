@@ -19,6 +19,6 @@ public class User {
     }
 
     String getUserInfo(){
-        return name + " | " + email + " | " + phoneNumber;
+        return name + " | " + email + " | " + phoneNumber + " | " + userID;
     }
 }

@@ -98,4 +98,11 @@ public class Biblioteca {
     public User getUserByID(String userID) {
         return libraryGuests.get(userID);
     }
+
+    public void printAllUsers() {
+        System.out.println("Here are all users in the system:");
+        for(User user: libraryGuests.values()){
+            System.out.println(user.getUserInfo());
+        }
+    }
 }

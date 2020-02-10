@@ -21,7 +21,7 @@ public class BibliotecaApp {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
         //isLibrarian = false;
         while(true){
-            System.out.println("Please sign in with your user ID (xxx-xxxx)");
+            System.out.println("Please sign in with your user ID (xxx-xxxx)"); //Throws exception if userInput not in LibraryGuest data structure
             try {
                 currentUser = myBiblioteca.getUserByID(getUserInput());
                 break;
@@ -70,8 +70,8 @@ public class BibliotecaApp {
         System.out.println("See available movies (M)");
         if(currentUser.isLibrarian){
             System.out.println("See all library guests (G)");
-            System.out.println("Add new book (NB)");
-            System.out.println("Add new movie (M)");
+            System.out.println("Add new item (N)");
+            System.out.println("Add new User (U) ");
         }
         System.out.println("Check out an item (C)");
         System.out.println("Return an item (R)");
@@ -79,53 +79,115 @@ public class BibliotecaApp {
     }
 
     static void pickMenuOption(String userInput) throws IncorrectOptionException, quitException {
-        if(userInput.equals("Q")){
-            throw new quitException("User wants to quit");
-        }
-        else if(userInput.equals("B")){
-            myBiblioteca.printAvailableBooks();
-        }
-        else if(userInput.equals("M")){
-            myBiblioteca.printAvailableMovies();
-        }
-        else if(userInput.equals("COB")){
-            startCheckOut('B');
-        }
-        else if(userInput.equals("CIB")){
-            startCheckIn();
-        }
-        else if(userInput.equals("COM")){
-            startCheckOut('M');
-        }
-        else{
-            throw new IncorrectOptionException(errorMessage);
+        switch(userInput.charAt(0)){
+            case 'Q':
+                throw new quitException("User wants to quit");
+            case 'B':
+                myBiblioteca.printAvailableBooks();
+                break;
+            case 'M':
+                myBiblioteca.printAvailableMovies();
+                break;
+            case 'C':
+                startCheckOut();
+                break;
+            case 'R':
+                startCheckIn();
+                break;
+            case 'G':
+                if(currentUser.isLibrarian){
+                    myBiblioteca.printAllUsers();
+                    break;
+                }
+                else{throw new IncorrectOptionException(errorMessage);}
+            case 'N':
+                if(currentUser.isLibrarian){
+                    addNewItem();
+                    break;
+                }
+                else{throw new IncorrectOptionException(errorMessage);}
+            case 'U':
+                if(currentUser.isLibrarian){
+                    addNewUser();
+                }
+                else{throw new IncorrectOptionException(errorMessage);}
+            default:
+                throw new IncorrectOptionException(errorMessage);
         }
     }
 
-    static void startCheckOut(char input) {
-        String type = "";
-        switch(input){
-            case 'B':
-                type = "book";
-                break;
+    private static void addNewItem() {
+        char type = getItemTypeFromUser();
+        switch(type){
             case 'M':
-                type = "movie";
+                addNewMovie();
+                break;
+            case 'B':
+                addNewBook();
                 break;
         }
-        System.out.println("Type the exact title of the " + type + " you would like to checkout: ");
+    }
+
+    private static void addNewBook() {
+        System.out.println("Please input the following information. ");
+        System.out.println("Title:");
         String title = getUserInput();
-        boolean successfulCheckout = myBiblioteca.checkOut(title,input,currentUser.userID);
+        System.out.println("Year:");
+        String year = getUserInput();
+        System.out.println("Author");
+        String author = getUserInput();
+        myBiblioteca.addOwnedBook(new Book(title,author,year));
+        System.out.println(String.format("The book \"%s\" has been added",title));
+    }
+
+    private static void addNewMovie() {
+        System.out.println("Please input the following information. ");
+        System.out.println("Title:");
+        String title = getUserInput();
+        System.out.println("Year:");
+        String year = getUserInput();
+        System.out.println("Director:");
+        String director = getUserInput();
+        System.out.println("Rating:");
+        String rating = getUserInput();
+        myBiblioteca.addOwnedMovie(new Movie(title,year,director,rating));
+        System.out.println(String.format("The movie \"%s\" has been added",title));
+    }
+
+    private static void addNewUser() {
+        System.out.println("Please input the following information. ");
+        System.out.println("Name:");
+        String name = getUserInput();
+        System.out.println("Email");
+        String email = getUserInput();
+        System.out.println("Phone Number:");
+        String phoneNum = getUserInput();
+        System.out.println("User ID:");
+        String userID = getUserInput();
+        System.out.println("Is this person an employee of the library? (Y/N)");
+        boolean isLibrarian = false;
+        if(getUserInput().equals("Y")){isLibrarian=true;}
+        myBiblioteca.addNewLibraryGuest(new User(name,email,phoneNum,userID,isLibrarian));
+        System.out.println(String.format("The User \"%s\" has been added to the system",name));
+    }
+
+    static void startCheckOut() {
+        char type = getItemTypeFromUser();
+        System.out.println("Type the exact title of the item you would like to checkout: ");
+        String title = getUserInput();
+        boolean successfulCheckout = myBiblioteca.checkOut(title,type,currentUser.userID);
         try {
-            finishCheckOut(successfulCheckout,type);
+            finishCheckOut(successfulCheckout);
         } catch (UnavailableException e) {
             System.out.println("Sorry, that " + type + " is not available");
         }
 
     }
 
-    static void finishCheckOut(boolean successfulCheckout,String type) throws UnavailableException{
+
+    static void finishCheckOut(boolean successfulCheckout) throws UnavailableException{
         if(successfulCheckout){
-            System.out.println("Thank you! Enjoy the " + type);
+            System.out.println("Thank you! Enjoy :) ");
         }
         else{
             throw new UnavailableException(errorMessage);
@@ -170,6 +232,15 @@ public class BibliotecaApp {
         System.out.println();
         return userInput;
     }
+
+    private static char getItemTypeFromUser() {
+        System.out.println("What type of item?");
+        System.out.println("Book (B)");
+        System.out.println("Movie (M)");
+        char input = getUserInput().charAt(0); //No input security
+        return input;
+    }
+
 
     static class quitException extends Exception {
         public quitException(String errorMessage) {

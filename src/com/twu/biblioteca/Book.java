@@ -5,7 +5,7 @@ public class Book {
     String title;
     String author;
     String yearPublished;
-    String checkedOutTo;
+    String checkedOutTo; //Switch this to User or biblioteca class?
 
     Book(String title){
         this.title = title;

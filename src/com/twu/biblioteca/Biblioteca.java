@@ -40,7 +40,6 @@ public class Biblioteca {
         booksOwnedByLibrary = new HashMap<Integer, Book>();
         libraryGuests = new HashMap<String, User>();
         checkedOutBooks = new HashMap<Integer, String>();
-        //isBookCheckedOut = new ArrayList<Boolean>();
         numOwnedBooks = 0;
     }
 

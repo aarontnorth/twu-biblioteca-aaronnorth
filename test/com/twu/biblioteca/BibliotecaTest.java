@@ -24,9 +24,9 @@ public class BibliotecaTest {
         testBiblioteca.addOwnedMovie(new Movie("Lilo and Stitch","2002","Alan Silvestri(not)","unrated"));
         testBiblioteca.addOwnedMovie(new Movie("National Treasure","2004","Jon Turtletaub","10"));
 
-        testBiblioteca.addNewLibraryGuest(new User("Jack","jack@jack.com","867-5309","000-0000"));
-        testBiblioteca.addNewLibraryGuest(new User("Jill","jill@jack.com","867-0000","000-0001"));
-        testBiblioteca.addNewLibraryGuest(new User("John","john@jack.com","867-1111","123-4567"));
+        testBiblioteca.addNewLibraryGuest(new User("Jack","jack@jack.com","867-5309","000-0000",true));
+        testBiblioteca.addNewLibraryGuest(new User("Jill","jill@jack.com","867-0000","000-0001",false));
+        testBiblioteca.addNewLibraryGuest(new User("John","john@jack.com","867-1111","123-4567",false));
 
     }
 

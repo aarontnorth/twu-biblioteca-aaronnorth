@@ -73,13 +73,13 @@ public class BibliotecaApp {
             System.out.println("Add new book (NB)");
             System.out.println("Add new movie (M)");
         }
-        System.out.println("Check out a book (COB)");
-        System.out.println("Check in a book (CIB)");
-        System.out.println("Check out a movie (COM)");
+        System.out.println("Check out an item (C)");
+        System.out.println("Return an item (R)");
+        System.out.println("Quit (Q)");
     }
 
     static void pickMenuOption(String userInput) throws IncorrectOptionException, quitException {
-        if(userInput.equals("q")){
+        if(userInput.equals("Q")){
             throw new quitException("User wants to quit");
         }
         else if(userInput.equals("B")){

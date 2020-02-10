@@ -7,7 +7,8 @@ public class BibliotecaApp {
     static String errorMessage = "Please select a valid option!";
     static Scanner myScanner;
     static Biblioteca myBiblioteca;
-    static String userID = "123-4567";
+    static String userID;
+    static boolean isLibrarian;
 
     BibliotecaApp(Biblioteca biblioteca){
         myBiblioteca = biblioteca;
@@ -18,8 +19,12 @@ public class BibliotecaApp {
         myBiblioteca = new Biblioteca("001");
         setupBiblioteca(myBiblioteca);
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
+        isLibrarian = false;
         System.out.println("Please sign in with your user ID (xxx-xxxx)");
         userID = getUserInput();
+        if(userID.equals("000-000L")){
+            isLibrarian = true;
+        }
         runMainMenu();
     }
 

@@ -48,7 +48,7 @@ public class BibliotecaApp {
 
 
     private static void runMainMenu() {
-        Boolean userWantsToBrowse = true;
+        boolean userWantsToBrowse = true;
         while(userWantsToBrowse) {
             showMainMenu();
             String userInput = getUserInput();
@@ -237,8 +237,7 @@ public class BibliotecaApp {
         System.out.println("What type of item?");
         System.out.println("Book (B)");
         System.out.println("Movie (M)");
-        char input = getUserInput().charAt(0); //No input security
-        return input;
+        return getUserInput().charAt(0); //No input security
     }
 
 
